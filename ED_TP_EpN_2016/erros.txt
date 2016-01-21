@@ -1,0 +1,7 @@
+Thu Jan 21 01:36:42 GMT 2016 Erro: java.lang.NumberFormatException: For input string: "ty5r6ftyhi"  Classe: GestorViagem
+Thu Jan 21 14:47:50 GMT 2016 Erro: java.lang.NumberFormatException: For input string: "hyjb"  Classe: GestorViagem
+Thu Jan 21 14:49:36 GMT 2016 Erro: java.lang.NumberFormatException: For input string: "jhv"  Classe: GestorViagem
+Thu Jan 21 14:52:39 GMT 2016 Erro: java.lang.NumberFormatException: For input string: "kjhn"  Classe: GestorViagem
+Thu Jan 21 14:54:13 GMT 2016 Erro: java.lang.NumberFormatException: For input string: "gvh"  Classe: GestorViagem
+Thu Jan 21 16:10:47 GMT 2016 Erro: java.lang.ClassCastException: Classes.Cidade cannot be cast to java.lang.String  Classe: DataManager
+Thu Jan 21 16:11:18 GMT 2016 Erro: java.lang.ClassCastException: Classes.Cidade cannot be cast to java.lang.String  Classe: DataManager
