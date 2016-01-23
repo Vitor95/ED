@@ -89,7 +89,7 @@ public class DadosViagem<T> implements Comparable<T>{
     @Override
     public int compareTo(T o) {
        DadosViagem dadosViagemCompare = (DadosViagem) o;
-       if(dadosViagemCompare.idDadosViagem < idDadosViagem){
+       if(dadosViagemCompare.distanciaKm < distanciaKm){
            return -1;
        }
        return 1;

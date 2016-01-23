@@ -6,11 +6,11 @@
 package Classes;
 
 import ED_12_Parte1_Ex2.Network;
-import ED_12_Parte1_Ex2.NetworkADT;
 import Ficheiros.DataManagement;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 
 /**
  *
@@ -26,12 +26,12 @@ public class Demo {
     public static void main(String[] args) throws IOException {
         gestorViagem = new GestorViagem();
 
-        gestorViagem.networkCidades = (Network) new DataManagement().obterNetwork("./Ficheiros/Network.csv");
-//        System.out.println(n.size());
-//        System.out.println(n.isConnected());
+       gestorViagem.networkCidades = (Network) new DataManagement().obterNetwork("./Ficheiros/Network.csv");
+//        System.out.println(gestorViagem.networkCidades.size());
+//        System.out.println(gestorViagem.networkCidades.isConnected());
 //
 //        //Tirar util !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        Iterator i = n.iteratorBFS(0);
+//        Iterator i = gestorViagem.networkCidades.iteratorBFS(0);
 //
 //        while (i.hasNext()) {
 //            System.out.println(((Cidade) i.next()).getNome());
@@ -40,8 +40,15 @@ public class Demo {
 //        GestorViagem gestorViagem = new GestorViagem();
 //        gestorViagem.introduzirDuracaoTotalMaximaViagem();
 //        gestorViagem.introduzirPrecoMaximoTroco();
-
-        menuPrincipal();
+//
+//        menuPrincipal();
+//       
+        Iterator i = gestorViagem.networkCidades.iteratorShortestPath(0, 5);
+        
+       while (i.hasNext()) {
+        //   System.out.println(gestorViagem.networkCidades.getIndex(i.next()));
+           System.out.println(((Cidade)i.next()).getNome());
+        }
 
     }
 
@@ -143,7 +150,7 @@ public class Demo {
 
             switch (opcao) {
                 case 1:
-                    gestorViagem.calcularMelhorTrajetoComCriterios(criterio, criterio, criterio);
+                    //gestorViagem.calcularMelhorTrajetoComCriterios(criterio, criterio, criterio);
                     break;
                 case 2:
                     criterio = menuCriterios();

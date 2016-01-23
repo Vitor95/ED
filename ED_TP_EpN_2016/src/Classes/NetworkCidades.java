@@ -6,10 +6,13 @@
 package Classes;
 
 import ED_12_Parte1_Ex2.ArrayUnorderedList;
+import ED_12_Parte1_Ex2.DoubleLinkedOrderedList;
 import ED_12_Parte1_Ex2.LinkedQueue;
+import ED_12_Parte1_Ex2.LinkedStack;
 import ED_12_Parte1_Ex2.Network;
 import ED_12_Parte1_Ex2.OrderedListADT;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -24,37 +27,44 @@ public class NetworkCidades<T> extends Network<T> {
 
     @Override
     public Iterator iteratorShortestPath(int startVertex, int targetVertex) {
-       int node = startVertex;
-       double custo =0;
-       LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
-       traversalQueue.enqueue(node);//adicionar o comeco
-       ArrayUnorderedList<Integer> resultList = new ArrayUnorderedList();
-       
-       while(true){
-           if(traversalQueue.isEmpty()){
-               return null;
-           }
-           node = traversalQueue.dequeue();
-           if(node == targetVertex){
-               resultList.addToRear(node);
-               return resultList.iterator();
-           }
-               resultList.addToRear(node);
-               
-               for (int i = 0; i < numVertices; i++) {
-               if(!resultList.contains(i)){
-                   if(traversalQueue.first().getElement()!=i){
-                       traversalQueue.enqueue(i);
-                   }else if(verificarMenorCusto(traversalQueue,node,i)){
-                       node = i;
-                   }
-               }
-           }
-           }
-           
-       
-      
-       
+        try{
+        Integer x;
+        boolean found;
+        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+        boolean[] visited = new boolean[numVertices];
+        if (!indexIsValid(startVertex)) {
+            return resultList.iterator();
+        }
+        for (int i = 0; i < numVertices; i++) {
+            visited[i] = false;
+        }
+        traversalStack.push(new Integer(startVertex));
+        resultList.addToRear(vertices[startVertex]);
+        visited[startVertex] = true;
+        while (!traversalStack.isEmpty()) {
+            x = traversalStack.peek();
+            found = false;
+            /**
+             * Find a vertex adjacent to x that has not been visited and push it
+             * on the stack
+             */
+            for (int i = 0; (i < numVertices) && !found; i++) {
+                if (adjList[x.intValue()][i]!=null && !visited[i]) {
+                    traversalStack.push(i);
+                    resultList.addToRear(vertices[i]);
+                    visited[i] = true;
+                    found = true;
+                }
+            }
+            if (!found && !traversalStack.isEmpty()) {
+                traversalStack.pop();
+            }
+        }
+         return resultList.iterator();
+        }catch(Exception e){
+            return null;
+        }
        
     }
     //verificar se existe ligacao direta
@@ -127,4 +137,23 @@ public class NetworkCidades<T> extends Network<T> {
        }
     return false;
     } 
+
+    public DadosViagem[] getAdjFromCityIndex(int i) {
+         OrderedListADT[][] adjListAux = adjList.clone(); // adjacency matrix
+         DadosViagem[]  tempList = new DadosViagem[numVertices];
+         try{
+      
+        for (int j = 0; j < numVertices; j++) {
+            if(adjListAux[i][j]!=null){
+                for (int k = 0; k < adjListAux[i][j].size(); k++) {
+                  tempList[k]= (DadosViagem) adjListAux[i][j].first();
+                  adjListAux[i][j].removeFirst();
+                  }
+            }
+          
+        }
+        }catch(Exception e){}
+        return tempList;
+    }
+    
 }

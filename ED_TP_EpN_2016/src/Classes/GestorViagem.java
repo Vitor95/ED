@@ -114,7 +114,7 @@ public class GestorViagem<T> implements GestorViagemADT<T> {
 
     @Override
     public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
 
     @Override

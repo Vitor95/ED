@@ -88,12 +88,12 @@ public class DataManagement implements DataManagementADT {
                 
                 
                 //intanciar DadosViagem DO
-                DadosViagem dadosViagem_DO = new DadosViagem(idDadosViagem++,cidadeOrigem, preco_Km_DO, listaHorariosSaida_DO,
-                        distanciaKm_DO, tempoMin_DO, cidadeDestino);
+                DadosViagem dadosViagem_DO = new DadosViagem(idDadosViagem++,cidadeDestino, preco_Km_DO, listaHorariosSaida_DO,
+                        distanciaKm_DO, tempoMin_DO,cidadeOrigem);
                 
                 //intanciar DadosViagem OD
-                DadosViagem dadosViagem_OD = new DadosViagem(idDadosViagem++,cidadeDestino, preco_Km_OD, listaHorariosSaida_OD,
-                        distanciaKm_OD, tempoMin_OD, cidadeOrigem);
+                DadosViagem dadosViagem_OD = new DadosViagem(idDadosViagem++,cidadeOrigem, preco_Km_OD, listaHorariosSaida_OD,
+                        distanciaKm_OD, tempoMin_OD, cidadeDestino);
                 
                 
                 //adicionar cidades
