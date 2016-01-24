@@ -5,8 +5,6 @@
  */
 package Classes;
 
-
-
 import ED_12_Parte1_Ex2.Network;
 import Exeptions.HoraInvalida;
 import Exeptions.PrecoInvalido;
@@ -115,22 +113,23 @@ public class GestorViagem<T> implements GestorViagemADT<T> {
     }
 
     @Override
-    public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino,T[] dadosViagem) {
-        Iterator iterator = networkCidades.shortestPathWeight(cidadeOrigem, cidadeDestino);
+    public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino, T[] dadosViagem) {
+     Iterator iterator = networkCidades.shortestPathWeight(cidadeOrigem, cidadeDestino);
         System.out.println("\tID\tNOME CIDADE");
-        while(iterator.hasNext()){
-            Cidade c = ((Cidade)iterator.next());
-            System.out.println("\t"+c.getId()+"\t"+c.getNome());
+        while (iterator.hasNext()) {
+            Cidade c = ((Cidade) iterator.next());
+            System.out.println("\t" + c.getId() + "\t" + c.getNome());
         }
-        //calcular custo
         
+        //calcular custo
+        obterCustoViagem(cidadeOrigem, cidadeDestino, dadosViagem);
+
     }
 
     @Override
     public void calcularAlternativas(T cidadeOrigem, T cidadeDestino) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     @Override
     public void calcularMelhorTrajetoComCriterios(T cidadeOrigem, T cidadeDestino, Criterio[] criterios) {
@@ -148,27 +147,31 @@ public class GestorViagem<T> implements GestorViagemADT<T> {
     }
 
     @Override
-    public void obterCustoViagem(T cidadeOrigem, T cidadeDestino, Iterator iterator, T[] dadosViagem) {
-  
-    DadosViagem[] dados = (DadosViagem[]) dadosViagem;
-    double custo =0;     
-    
-    
-        for (int i = 0; i < dados.length; i++) {
-            
-            if(dados[i]!=null && dados[i].getCidadeOrigem().compareTo(networkCidades.vertices()[(Integer)cidadeOrigem])==0 &&
-                    dados[i].getCidadeDestino().compareTo(networkCidades.vertices()[(Integer) cidadeDestino])==0 &&
-                    dados[i].getDistanciaKm()==(Double) networkCidades.ajdListWeight[(Integer)cidadeOrigem][(Integer)cidadeDestino].findMin()){
+    public void obterCustoViagem(T cidadeOrigem, T cidadeDestino, T[] dadosViagem) {
+
+        DadosViagem[] dados = (DadosViagem[]) dadosViagem;
+        Iterator iterator = networkCidades.shortestPathWeight(cidadeOrigem, cidadeDestino);
+        double custo = 0;
+        T cidadeAtual = (T) iterator.next();
+        T cidadePos = (T) iterator.next();
+
+        while (iterator.hasNext()) {
+            for (int i = 0; i < dados.length; i++) {
+
+                if (dados[i] != null && dados[i].getCidadeOrigem().compareTo(networkCidades.vertices()[(Integer) cidadeAtual]) == 0
+                        && dados[i].getCidadeDestino().compareTo(networkCidades.vertices()[(Integer) cidadePos]) == 0
+                        && dados[i].getDistanciaKm() == (Double) networkCidades.ajdListWeight[(Integer) cidadeAtual][(Integer) cidadePos].findMin()) {
                     custo += dados[i].getDistanciaKm() * dados[i].getPreco_Km();
-                
+
+                }
+                cidadeAtual = cidadePos;
+                cidadePos = (T) iterator.next();
+
             }
-        
-        
         }
+
         System.out.println("Custo: " + custo);
-    
+
     }
-    
-    
-    
+
 }

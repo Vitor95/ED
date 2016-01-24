@@ -67,5 +67,11 @@ public interface GestorViagemADT<T> {
      */
     public void calcularAlternativasComCriterios(T cidadeOrigem, T cidadeDestino,Criterio[] criterios);    
     
-    public void obterCustoViagem(T cidadeOrigem,T cidadeDestino,Iterator iterator,T[] dadosViagem);
+    /**
+     * obter o custo de uma viagem
+     * @param cidadeOrigem
+     * @param cidadeDestino
+     * @param dadosViagem 
+     */
+    public void obterCustoViagem(T cidadeOrigem, T cidadeDestino, T[] dadosViagem);
 }
