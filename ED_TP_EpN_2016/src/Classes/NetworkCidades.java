@@ -6,13 +6,9 @@
 package Classes;
 
 import ED_12_Parte1_Ex2.ArrayUnorderedList;
-import ED_12_Parte1_Ex2.DoubleLinkedOrderedList;
 import ED_12_Parte1_Ex2.LinkedQueue;
-import ED_12_Parte1_Ex2.LinkedStack;
 import ED_12_Parte1_Ex2.Network;
-import ED_12_Parte1_Ex2.OrderedListADT;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  *
@@ -26,134 +22,106 @@ public class NetworkCidades<T> extends Network<T> {
     }
 
     @Override
-    public Iterator iteratorShortestPath(int startVertex, int targetVertex) {
-        try{
-        Integer x;
-        boolean found;
-        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
+    public Iterator shortestPathWeight(T vertex1, T vertex2) {
+        int startVertex=(Integer) vertex1;
+        int targetVertex= (Integer) vertex2;
+        Integer x;									//vertice atual
+        LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();		//para guardar os vertices adjacentes de x
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
-        boolean[] visited = new boolean[numVertices];
-        if (!indexIsValid(startVertex)) {
-            return resultList.iterator();
+        //para guardar o caminho mais curto
+        if (!indexIsValid(startVertex)) {						//verifica se o startIndex e valido
+            return resultList.iterator();						//retorna iterador vazio	
         }
+
+        boolean[] visited = new boolean[numVertices];					//no inicio todos os vertices nao foram visitados
         for (int i = 0; i < numVertices; i++) {
             visited[i] = false;
         }
-        traversalStack.push(new Integer(startVertex));
-        resultList.addToRear(vertices[startVertex]);
+
+        int verticeAnterior = startVertex;
+        double comprimento = 0;
+        traversalQueue.enqueue(new Integer(startVertex));				//adiciona o index inicial a queue
         visited[startVertex] = true;
-        while (!traversalStack.isEmpty()) {
-            x = traversalStack.peek();
-            found = false;
-            /**
-             * Find a vertex adjacent to x that has not been visited and push it
-             * on the stack
-             */
-            for (int i = 0; (i < numVertices) && !found; i++) {
-                if (adjList[x.intValue()][i]!=null && !visited[i]) {
-                    traversalStack.push(i);
-                    resultList.addToRear(vertices[i]);
-                    visited[i] = true;
-                    found = true;
+
+        Iterator res = verificarLigacaoDireta(startVertex, targetVertex);
+        if (res.hasNext()) {
+            return res;
+        }
+
+        try {//coloca vertice visitado
+            while (!traversalQueue.isEmpty() && traversalQueue.first().getElement() != targetVertex) {
+
+                x = traversalQueue.dequeue().intValue();
+                if (x == startVertex) {
+                    resultList.addToRear(vertices[x.intValue()]);
+                    //se houver uma viagem direta adicionar a cidade (se houver mais que uma viagem, adicionar a que tem distancia menor)
+                } else {
+
+                    Iterator res2 = verificarLigacaoDireta(verticeAnterior, targetVertex);
+                    if (res.hasNext()) {
+                        resultList.addToRear((T) res.next());
+                        resultList.addToRear((T) res.next());
+                        return resultList.iterator();
+                    }
+                    // ver qual a menor viagem de todos elementos de traversalQueue
+                    int cidadeMaisProxima = x;
+                    double distanciaViagemMenor = (double) ajdListWeight[verticeAnterior][x].findMin();
+
+                    int size = traversalQueue.size();
+                    for (int i = 0; i < size; i++) {
+                        //encontrar a menor distancia entre verticeAnterior e x(atual)
+                        x = traversalQueue.dequeue();
+                        if ((Double) ajdListWeight[verticeAnterior][x].findMin() < distanciaViagemMenor) {
+                            cidadeMaisProxima=x; 
+                        }
+
+                    }
+
+                    comprimento += (Double)ajdListWeight[verticeAnterior][cidadeMaisProxima].findMin();
+                    resultList.addToRear(vertices[cidadeMaisProxima]);
+                    verticeAnterior = cidadeMaisProxima;
+
                 }
+
+                for (int i = 0; i < numVertices; i++) {
+                    if (ajdListWeight[verticeAnterior][i] != null && !visited[i]) {
+                        traversalQueue.enqueue(new Integer(i));
+                        visited[i] = true;
+                    }
+                }
+
             }
-            if (!found && !traversalStack.isEmpty()) {
-                traversalStack.pop();
-            }
+
+            resultList.addToRear(vertices[targetVertex]);
+            comprimento += (Double) ajdListWeight[verticeAnterior][targetVertex].findMin();
+            System.out.println(comprimento);
+        } catch (Exception ex) {
+            System.out.println("ERRO");
         }
-         return resultList.iterator();
-        }catch(Exception e){
-            return null;
-        }
-       
+        return resultList.iterator();
+        //verificar se existe ligacao direta
     }
-    //verificar se existe ligacao direta
+
 
     public Iterator<T> verificarLigacaoDireta(int indexOrigem, int indexDestino) {
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+
         try {
             double comprimento = 0;
-            OrderedListADT[][] adjListAux = adjList.clone(); // adjacency matrix
-            if (adjListAux[indexOrigem][indexDestino] != null) {
+
+            if (adjMatrix[indexOrigem][indexDestino] != false) {
                 resultList.addToRear(vertices[indexOrigem]);
-                DadosViagem dadosViagemMenor = null;
-                //obter os dados do menor caminho
-                dadosViagemMenor = (DadosViagem) adjListAux[indexOrigem][indexDestino].first();
-                adjListAux[indexOrigem][indexDestino].removeFirst();
 
-                int size = adjListAux[indexOrigem][indexDestino].size();
-                //encontrar a menor distancia entre verticeAnterior e x(atual) 
-                for (int j = 0; j < size; j++) {
-
-                    DadosViagem dadosViagem = (DadosViagem) adjListAux[indexOrigem][indexDestino].first();
-                    adjListAux[indexOrigem][indexDestino].removeFirst();
-                    if (dadosViagem.getDistanciaKm() < dadosViagemMenor.getDistanciaKm()) {
-
-                        dadosViagemMenor = dadosViagem;
-
-                    }
-
-                }
-                comprimento = dadosViagemMenor.getDistanciaKm();
+                comprimento = (double) ajdListWeight[indexOrigem][indexDestino].findMin();
                 resultList.addToRear(vertices[indexDestino]);
                 System.out.println("Distancia da Viagem: " + comprimento);
-
             }
+
             return resultList.iterator();
         } catch (Exception e) {
-
+            return resultList.iterator();
         }
 
-        return resultList.iterator();
     }
 
-    private boolean verificarMenorCusto(LinkedQueue<Integer> traversalQueue, int node, int i) {
-       try{
-        OrderedListADT[][] adjListAux = adjList.clone(); // adjacency matrix
-     
-                //obter os dados do menor caminho
-                 DadosViagem dadosViagemMenor = (DadosViagem) adjListAux[node][i].first();
-                adjListAux[node][i].removeFirst();
-
-                int size = adjListAux[node][i].size();
-                //encontrar a menor distancia entre verticeAnterior e x(atual) 
-                for (int j = 0; j < size; j++) {
-
-                    DadosViagem dadosViagem = (DadosViagem) adjListAux[node][i].first();
-                    adjListAux[node][i].removeFirst();
-                    if (dadosViagem.getDistanciaKm() < dadosViagemMenor.getDistanciaKm()) {
-
-                        dadosViagemMenor = dadosViagem;
-
-                    }
-
-                }
-               if(dadosViagemMenor.getCidadeDestino().compareTo(i)==0){
-                   return true;
-               }
-              
-       }catch(Exception e){
-           
-       }
-    return false;
-    } 
-
-    public DadosViagem[] getAdjFromCityIndex(int i) {
-         OrderedListADT[][] adjListAux = adjList.clone(); // adjacency matrix
-         DadosViagem[]  tempList = new DadosViagem[numVertices];
-         try{
-      
-        for (int j = 0; j < numVertices; j++) {
-            if(adjListAux[i][j]!=null){
-                for (int k = 0; k < adjListAux[i][j].size(); k++) {
-                  tempList[k]= (DadosViagem) adjListAux[i][j].first();
-                  adjListAux[i][j].removeFirst();
-                  }
-            }
-          
-        }
-        }catch(Exception e){}
-        return tempList;
-    }
-    
 }
