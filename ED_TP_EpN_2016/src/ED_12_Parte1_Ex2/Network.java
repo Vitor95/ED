@@ -21,6 +21,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>{
         super();
         ajdListWeight = new LinkedHeap[122][122];
     }
+    
 
     @Override
     public void addEdge(T vertex1, T vertex2, double weight) {
@@ -36,6 +37,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>{
        }
        
     }
+    
     
 
     

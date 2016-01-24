@@ -29,7 +29,8 @@ public class NetworkCidades<T> extends Network<T> {
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();		//para guardar os vertices adjacentes de x
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
         //para guardar o caminho mais curto
-        if (!indexIsValid(startVertex)) {						//verifica se o startIndex e valido
+        if (!indexIsValid(startVertex)||!indexIsValid(targetVertex)) {
+            System.out.println("Cidade origem invalida");//verifica se o startIndex e valido
             return resultList.iterator();						//retorna iterador vazio	
         }
 
@@ -45,6 +46,7 @@ public class NetworkCidades<T> extends Network<T> {
 
         Iterator res = verificarLigacaoDireta(startVertex, targetVertex);
         if (res.hasNext()) {
+            
             return res;
         }
 
@@ -57,12 +59,7 @@ public class NetworkCidades<T> extends Network<T> {
                     //se houver uma viagem direta adicionar a cidade (se houver mais que uma viagem, adicionar a que tem distancia menor)
                 } else {
 
-                    Iterator res2 = verificarLigacaoDireta(verticeAnterior, targetVertex);
-                    if (res.hasNext()) {
-                        resultList.addToRear((T) res.next());
-                        resultList.addToRear((T) res.next());
-                        return resultList.iterator();
-                    }
+                    
                     // ver qual a menor viagem de todos elementos de traversalQueue
                     int cidadeMaisProxima = x;
                     double distanciaViagemMenor = (double) ajdListWeight[verticeAnterior][x].findMin();
@@ -82,11 +79,21 @@ public class NetworkCidades<T> extends Network<T> {
                     verticeAnterior = cidadeMaisProxima;
 
                 }
-
+ 
                 for (int i = 0; i < numVertices; i++) {
-                    if (ajdListWeight[verticeAnterior][i] != null && !visited[i]) {
+                    
+                    if (ajdListWeight[verticeAnterior][i] != null && !visited[i] && ajdListWeight[verticeAnterior][i].size()>1) {
+                        
+                         Iterator res2 = verificarLigacaoDireta(verticeAnterior, targetVertex );
+                    if (res2.hasNext()) {
+                        res2.next();
+                        resultList.addToRear((T) res2.next());
+                        return resultList.iterator();
+                    }
                         traversalQueue.enqueue(new Integer(i));
                         visited[i] = true;
+                        
+                        
                     }
                 }
 
@@ -96,7 +103,6 @@ public class NetworkCidades<T> extends Network<T> {
             comprimento += (Double) ajdListWeight[verticeAnterior][targetVertex].findMin();
             System.out.println(comprimento);
         } catch (Exception ex) {
-            System.out.println("ERRO");
         }
         return resultList.iterator();
         //verificar se existe ligacao direta
@@ -110,8 +116,8 @@ public class NetworkCidades<T> extends Network<T> {
             double comprimento = 0;
 
             if (adjMatrix[indexOrigem][indexDestino] != false) {
+               
                 resultList.addToRear(vertices[indexOrigem]);
-
                 comprimento = (double) ajdListWeight[indexOrigem][indexDestino].findMin();
                 resultList.addToRear(vertices[indexDestino]);
                 System.out.println("Distancia da Viagem: " + comprimento);

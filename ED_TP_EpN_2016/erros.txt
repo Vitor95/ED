@@ -29,3 +29,4 @@ Sun Jan 24 05:16:56 GMT 2016 Erro: java.lang.ClassCastException: Classes.Cidade 
 Sun Jan 24 05:18:38 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
 Sun Jan 24 05:18:52 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
 Sun Jan 24 05:19:49 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 14:22:03 GMT 2016 Erro: java.lang.NullPointerException  Classe: DataManager

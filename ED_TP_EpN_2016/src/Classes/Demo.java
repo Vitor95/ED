@@ -27,7 +27,7 @@ public class Demo {
     public static void main(String[] args) throws IOException{
         gestorViagem = new GestorViagem();
 
-       gestorViagem.networkCidades = (Network) new DataManagement().obterNetwork("./Ficheiros/Network.csv");
+       gestorViagem.networkCidades = (NetworkCidades)new DataManagement().obterNetwork("./Ficheiros/Network.csv");
 //        System.out.println(gestorViagem.networkCidades.size());
 //        System.out.println(gestorViagem.networkCidades.isConnected());
 //
@@ -45,10 +45,11 @@ public class Demo {
 //        menuPrincipal();
 //       
 try {
-            Iterator i = gestorViagem.networkCidades.iteratorShortestPath(0, 3);
+       //     Iterator i = gestorViagem.networkCidades.shortestPathWeight(0, 6);
+              Iterator i = gestorViagem.networkCidades.shortestPathWeight(6, 9);
              while (i.hasNext()) {
         //   System.out.println(gestorViagem.networkCidades.getIndex(i.next()));
-           System.out.println(((Cidade)i.next()).getNome());
+           System.out.print(((Cidade)i.next()).getNome()+" -> ");
         }
         } catch (Exception e) {
         }

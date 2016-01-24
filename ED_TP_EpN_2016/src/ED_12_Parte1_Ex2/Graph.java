@@ -241,9 +241,9 @@ public class Graph<T> implements GraphADT<T> {
     }
 
     public int getIndex(T vertex) {
-
-        for (int i = 0; i < vertices.length; i++) {
-            if (vertex.equals(vertices[i])) {
+        Comparable c = (Comparable) vertex;
+        for (int i = 0; i < numVertices; i++) {
+            if (c.compareTo(vertices[i])==0) {
                 return i;
             }
         }

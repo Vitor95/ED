@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
  */
 public class GestorViagem<T> implements GestorViagemADT<T> {
 
-    Network<T> networkCidades;
+    NetworkCidades<T> networkCidades;
 
     @Override
     public Hora introduzirDuracaoTotalMaximaViagem() throws IOException {
