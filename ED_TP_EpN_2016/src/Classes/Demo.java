@@ -20,14 +20,14 @@ import java.util.Iterator;
 public class Demo {
 
     static GestorViagem gestorViagem;
-
+    static DataManagement dataManagement;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException{
         gestorViagem = new GestorViagem();
-
-       gestorViagem.networkCidades = (NetworkCidades)new DataManagement().obterNetwork("./Ficheiros/Network.csv");
+        dataManagement = new DataManagement();
+       gestorViagem.networkCidades = (NetworkCidades) dataManagement.obterNetwork("./Ficheiros/Network.csv");
 //        System.out.println(gestorViagem.networkCidades.size());
 //        System.out.println(gestorViagem.networkCidades.isConnected());
 //
@@ -38,21 +38,19 @@ public class Demo {
 //            System.out.println(((Cidade) i.next()).getNome());
 //        }
 //
-//        GestorViagem gestorViagem = new GestorViagem();
-//        gestorViagem.introduzirDuracaoTotalMaximaViagem();
-//        gestorViagem.introduzirPrecoMaximoTroco();
-//
-//        menuPrincipal();
+        GestorViagem gestorViagem = new GestorViagem();
+      
+        menuPrincipal();
 //       
-try {
-       //     Iterator i = gestorViagem.networkCidades.shortestPathWeight(0, 6);
-              Iterator i = gestorViagem.networkCidades.shortestPathWeight(6, 9);
-             while (i.hasNext()) {
-        //   System.out.println(gestorViagem.networkCidades.getIndex(i.next()));
-           System.out.print(((Cidade)i.next()).getNome()+" -> ");
-        }
-        } catch (Exception e) {
-        }
+//try {
+//       //     Iterator i = gestorViagem.networkCidades.shortestPathWeight(0, 6);
+//              Iterator i = gestorViagem.networkCidades.shortestPathWeight(6, 9);
+//             while (i.hasNext()) {
+//        //   System.out.println(gestorViagem.networkCidades.getIndex(i.next()));
+//           System.out.print(((Cidade)i.next()).getNome()+" -> ");
+//        }
+//        } catch (Exception e) {
+//        }
         
         
       
@@ -113,31 +111,35 @@ try {
     }
 
     private static void menuEncontrarMinhaViagemSemCriterios() throws IOException {
-    inserirCidadesDO();
+        int[] cidadeDO = inserirCidadesDO();
+     gestorViagem.calcularMelhorTrajeto(cidadeDO[0],cidadeDO[1],dataManagement.dadosViagens);
     }
 
-    private static void inserirCidadesDO() throws IOException {
+    private static int[] inserirCidadesDO() throws IOException {
         boolean cidadeO = true;
         boolean cidadeD = true;
+          String cidadeOrigem;
+           String cidadeDestino;
         do {
             System.out.println(div());
             System.out.println("\tESCOLHA AS CIDADES");
             System.out.print("Cidade origem: ");
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            String cidadeOrigem = in.readLine();
+            cidadeOrigem = in.readLine();
 
             if (gestorViagem.networkCidades.getIndex(new Cidade(1, cidadeOrigem)) == -1) {
                 System.out.println("Cidade não encontrada");
                 cidadeO = false;
             }
             System.out.print("Cidade destino: ");
-            String cidadeDestino = in.readLine();
-
+            cidadeDestino = in.readLine();
             if (gestorViagem.networkCidades.getIndex(new Cidade(1, cidadeDestino)) == -1) {
                 System.out.println("Cidade não encontrada");
                 cidadeD = false;
             }
-        } while (cidadeO && cidadeD);
+        } while (!cidadeO && !cidadeD);
+        return new int[]{gestorViagem.networkCidades.getIndex(new Cidade(1, cidadeOrigem)),
+        gestorViagem.networkCidades.getIndex(new Cidade(1, cidadeDestino))};
 
     }
 

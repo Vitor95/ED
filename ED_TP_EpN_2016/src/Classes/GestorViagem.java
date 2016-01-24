@@ -15,6 +15,7 @@ import Interfaces.GestorViagemADT;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 
 /**
  *
@@ -114,8 +115,15 @@ public class GestorViagem<T> implements GestorViagemADT<T> {
     }
 
     @Override
-    public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino) {
-    
+    public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino,T[] dadosViagem) {
+        Iterator iterator = networkCidades.shortestPathWeight(cidadeOrigem, cidadeDestino);
+        System.out.println("\tID\tNOME CIDADE");
+        while(iterator.hasNext()){
+            Cidade c = ((Cidade)iterator.next());
+            System.out.println("\t"+c.getId()+"\t"+c.getNome());
+        }
+        //calcular custo
+        
     }
 
     @Override
@@ -138,4 +146,29 @@ public class GestorViagem<T> implements GestorViagemADT<T> {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         return in.readLine();
     }
+
+    @Override
+    public void obterCustoViagem(T cidadeOrigem, T cidadeDestino, Iterator iterator, T[] dadosViagem) {
+  
+    DadosViagem[] dados = (DadosViagem[]) dadosViagem;
+    double custo =0;     
+    
+    
+        for (int i = 0; i < dados.length; i++) {
+            
+            if(dados[i]!=null && dados[i].getCidadeOrigem().compareTo(networkCidades.vertices()[(Integer)cidadeOrigem])==0 &&
+                    dados[i].getCidadeDestino().compareTo(networkCidades.vertices()[(Integer) cidadeDestino])==0 &&
+                    dados[i].getDistanciaKm()==(Double) networkCidades.ajdListWeight[(Integer)cidadeOrigem][(Integer)cidadeDestino].findMin()){
+                    custo += dados[i].getDistanciaKm() * dados[i].getPreco_Km();
+                
+            }
+        
+        
+        }
+        System.out.println("Custo: " + custo);
+    
+    }
+    
+    
+    
 }

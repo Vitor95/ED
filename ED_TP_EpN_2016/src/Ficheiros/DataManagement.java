@@ -26,7 +26,7 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
  * @author Vitor
  */
 public class DataManagement implements DataManagementADT {
-    DadosViagem[] dadosViagens = new DadosViagem[500];
+    public DadosViagem[] dadosViagens = new DadosViagem[500];
     int countDadosViagem = 0;
 
     public DataManagement() {

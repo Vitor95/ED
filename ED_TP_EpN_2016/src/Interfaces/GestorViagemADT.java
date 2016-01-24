@@ -6,9 +6,11 @@
 package Interfaces;
 
 import Classes.Criterio;
+import Classes.DadosViagem;
 import Classes.Hora;
 import Enum.TipoCriterio;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  *
@@ -45,7 +47,7 @@ public interface GestorViagemADT<T> {
      *  @param cidadeOrigem  primeira cidade da viagem
      *  @param cidadeDestino  ultima cidade da viagem
      */
-    public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino);
+    public void calcularMelhorTrajeto(T cidadeOrigem, T cidadeDestino,T[] dadosViagem);
     /**
      * recalcular trajeto considerando criterios diferentes
     *  @param cidadeOrigem  primeira cidade da viagem
@@ -65,4 +67,5 @@ public interface GestorViagemADT<T> {
      */
     public void calcularAlternativasComCriterios(T cidadeOrigem, T cidadeDestino,Criterio[] criterios);    
     
+    public void obterCustoViagem(T cidadeOrigem,T cidadeDestino,Iterator iterator,T[] dadosViagem);
 }

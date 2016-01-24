@@ -129,5 +129,8 @@ public class NetworkCidades<T> extends Network<T> {
         }
 
     }
+    public T[] vertices(){
+        return vertices; 
+    }
 
 }
