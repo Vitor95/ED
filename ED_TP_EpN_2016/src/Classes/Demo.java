@@ -5,6 +5,7 @@
  */
 package Classes;
 
+
 import ED_12_Parte1_Ex2.Network;
 import Ficheiros.DataManagement;
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ public class Demo {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         gestorViagem = new GestorViagem();
 
        gestorViagem.networkCidades = (Network) new DataManagement().obterNetwork("./Ficheiros/Network.csv");
@@ -43,12 +44,17 @@ public class Demo {
 //
 //        menuPrincipal();
 //       
-        Iterator i = gestorViagem.networkCidades.iteratorShortestPath(0, 5);
-        
-       while (i.hasNext()) {
+try {
+            Iterator i = gestorViagem.networkCidades.iteratorShortestPath(0, 3);
+             while (i.hasNext()) {
         //   System.out.println(gestorViagem.networkCidades.getIndex(i.next()));
            System.out.println(((Cidade)i.next()).getNome());
         }
+        } catch (Exception e) {
+        }
+        
+        
+      
 
     }
 

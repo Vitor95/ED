@@ -8,3 +8,24 @@ Thu Jan 21 16:11:18 GMT 2016 Erro: java.lang.ClassCastException: Classes.Cidade 
 Fri Jan 22 14:37:20 GMT 2016 Erro: java.lang.NullPointerException  Classe: DataManager
 Fri Jan 22 14:37:36 GMT 2016 Erro: java.lang.NullPointerException  Classe: DataManager
 Fri Jan 22 18:37:00 GMT 2016 Erro: java.lang.NumberFormatException: For input string: "grf"  Classe: GestorViagem
+Sat Jan 23 16:40:51 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 100  Classe: DataManager
+Sun Jan 24 03:55:38 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 0  Classe: DataManager
+Sun Jan 24 04:40:30 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 0  Classe: DataManager
+Sun Jan 24 04:40:41 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 0  Classe: DataManager
+Sun Jan 24 04:42:52 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 0  Classe: DataManager
+Sun Jan 24 04:50:30 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 04:54:52 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 04:55:43 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 100  Classe: DataManager
+Sun Jan 24 04:58:06 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 100  Classe: DataManager
+Sun Jan 24 04:58:14 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 100  Classe: DataManager
+Sun Jan 24 04:58:18 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 100  Classe: DataManager
+Sun Jan 24 04:58:36 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 05:00:39 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 05:03:09 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 10  Classe: DataManager
+Sun Jan 24 05:03:47 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 10  Classe: DataManager
+Sun Jan 24 05:04:24 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 10  Classe: DataManager
+Sun Jan 24 05:05:06 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 20  Classe: DataManager
+Sun Jan 24 05:16:56 GMT 2016 Erro: java.lang.ClassCastException: Classes.Cidade cannot be cast to java.lang.Integer  Classe: DataManager
+Sun Jan 24 05:18:38 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 05:18:52 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager
+Sun Jan 24 05:19:49 GMT 2016 Erro: java.lang.ArrayIndexOutOfBoundsException: 30  Classe: DataManager

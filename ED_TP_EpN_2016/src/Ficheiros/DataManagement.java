@@ -26,10 +26,15 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
  * @author Vitor
  */
 public class DataManagement implements DataManagementADT {
+    DadosViagem[] dadosViagens = new DadosViagem[500];
+    int countDadosViagem = 0;
 
+    public DataManagement() {
+    }
     @Override
     public NetworkADT obterNetwork(String ficheiro)throws IOException{
         try {
+           
             //Instanciar FileReader's
             FileReader data = new FileReader(ficheiro);
             //Instanciar BufferedReader's
@@ -39,7 +44,7 @@ public class DataManagement implements DataManagementADT {
             //ler primeira linha de informacao do ficheiro
             br.readLine();
             //instanciar variaveis necessarias
-            NetworkADT networkADT = new NetworkCidades();
+            NetworkADT networkADT = (NetworkADT) new NetworkCidades();
 
             //instanciar string para armazenar a linha completa
             String linhaCompleta;
@@ -101,8 +106,13 @@ public class DataManagement implements DataManagementADT {
                 networkADT.addVertex(cidadeDestino);
                 
                 //atribuir dados à rede de cidades do norte
-                networkADT.addEdge(cidadeOrigem, cidadeDestino, dadosViagem_OD);
-                  networkADT.addEdge(cidadeDestino, cidadeOrigem, dadosViagem_DO);
+                networkADT.addEdge(cidadeOrigem, cidadeDestino, dadosViagem_OD.getDistanciaKm());
+                  networkADT.addEdge(cidadeDestino, cidadeOrigem, dadosViagem_DO.getDistanciaKm());
+                  
+                  dadosViagens[countDadosViagem] = dadosViagem_OD;
+                  countDadosViagem++;
+                  dadosViagens[countDadosViagem] = dadosViagem_DO;
+                  countDadosViagem++;
                 
             }
             return networkADT;

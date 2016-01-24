@@ -5,8 +5,9 @@
  */
 package Classes;
 
+
+
 import ED_12_Parte1_Ex2.Network;
-import Enum.TipoCriterio;
 import Exeptions.HoraInvalida;
 import Exeptions.PrecoInvalido;
 import Ficheiros.EscreverErrosFicheiro;

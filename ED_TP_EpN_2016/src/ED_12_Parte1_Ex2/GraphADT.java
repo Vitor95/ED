@@ -53,7 +53,7 @@ public Iterator iteratorBFS(int startVertex);
 * @return a depth first iterator starting at the
 * given vertex
 */
-public Iterator iteratorDFS(int startVertex)throws EmptyCollectionException;
+public Iterator iteratorDFS(int startVertex) throws EmptyCollectionException;
 /**
 * Returns an iterator that contains the shortest path between
 * the two vertices.
